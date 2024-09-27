@@ -70,4 +70,57 @@ public class DBOperations {
         // Execute the query
         p.executeUpdate();
     }
+    
+    public void deleteStudent(String regNo) throws ClassNotFoundException, SQLException {
+        Connection connect = getConnection();
+        String query = "DELETE FROM students WHERE registered_number = ?";
+        PreparedStatement p = connect.prepareStatement(query);
+        p.setString(1, regNo);
+        p.executeUpdate();
+    }
+    
+    public Student findByRegNo(String regNo) throws ClassNotFoundException, SQLException {
+        String query = "SELECT * FROM students WHERE registered_number = ?";
+        Connection connect = getConnection();
+        PreparedStatement p = connect.prepareStatement(query);
+        p.setString(1, regNo);
+        ResultSet res = p.executeQuery();
+
+        Student s = null;
+        if (res.next()) {
+            String registeredNo = res.getString(1);
+            String studentName = res.getString(2);
+            String DOB = res.getString(3);
+            String gender = res.getString(4);
+            String branch = res.getString(5);
+            int year = res.getInt(6);
+            String semester = res.getString(7);
+            String collegeName = res.getString(8);
+
+            s = new Student(registeredNo, studentName, DOB, gender, branch, year, semester, collegeName);
+        }
+        return s;
+    }
+
+    
+    public void updateStudentDetails(Student s) throws ClassNotFoundException, SQLException {
+        Connection connect = getConnection();
+        System.out.println(s);
+        String query = "update students set name =?, dob =?, gender =?, branch =?, year =?, semester =?, college_name=? where registered_number=?";
+        PreparedStatement p = connect.prepareStatement(query);
+        
+        p.setString(1, s.getStudentName());
+        p.setString(2, s.getDOB());
+        p.setString(3, s.getGender());
+        p.setString(4, s.getBranch());
+        p.setInt(5, s.getYear());
+        p.setString(6, s.getSemester());
+        p.setString(7, s.getCollegeName());
+        p.setString(8, s.getRegisteredNo());
+
+        p.executeUpdate();
+    }
+
+
+
 }
