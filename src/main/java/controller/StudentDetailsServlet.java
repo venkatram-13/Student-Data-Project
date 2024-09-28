@@ -29,29 +29,10 @@ public class StudentDetailsServlet extends HttpServlet {
         
      // Create Student object
         Student student = new Student(registeredNo, studentName, DOB, gender, branch, year, semester, collegeName);
-
-        // Create DBOperations object
         DBOperations dbOperations = new DBOperations();
         try {
-            // Insert student details into the database
-            dbOperations.insertStudentDetails(student);
-
-            // Redirect or forward to a success page
-            request.getRequestDispatcher("/WEB-INF/success.jsp").forward(request, response);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            // Redirect or forward to an error page
-            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
-        }
-    }
-}
-
- 
- 
- /*
-
- try {
             // Set student attributes in request
+        	dbOperations.insertStudentDetails(student);
             request.setAttribute("registeredNo", registeredNo);
             request.setAttribute("studentName", studentName);
             request.setAttribute("DOB", DOB);
@@ -62,7 +43,6 @@ public class StudentDetailsServlet extends HttpServlet {
             request.setAttribute("collegeName", collegeName);
 
             // Forward request to JSP page to display data
-            // request.getRequestDispatcher("/displayStudentDetails.jsp").forward(request, response);
             request.getRequestDispatcher("/WEB-INF/displayStudentDetails.jsp").forward(request, response) ;
             
         } 
@@ -71,8 +51,5 @@ public class StudentDetailsServlet extends HttpServlet {
             // response.sendRedirect("error.jsp");
         	response.sendRedirect("WEB-INF/error.jsp") ;
         }
-        
-        
- 
- 
-  * */
+    }
+}
